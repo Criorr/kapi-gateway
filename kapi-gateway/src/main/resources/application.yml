@@ -1,0 +1,38 @@
+server:
+  port: 8082
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: path_route
+#          uri: https://baidu.com
+#          predicates:
+#            - Path=/api/**
+#        - id: path_route2
+#          uri: https://bing.com
+#          predicates:
+#            - Path=/bing/**
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - AddResponseHeader=resource,kapi
+      routes:
+        - id: api_route
+          uri: http://localhost:8123
+          predicates:
+          - Path=/api/**
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: trace
+dubbo:
+  application:
+    name: dubbo-springboot-demo-consumer
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: nacos://localhost:8848
