@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yupi.springbootinit.common.ErrorCode;
 import com.yupi.springbootinit.exception.BusinessException;
 import com.yupi.springbootinit.exception.ThrowUtils;
-import com.yupi.springbootinit.model.entity.InterfaceInfo;
+import com.yupi.kapicommon.model.entity.InterfaceInfo;
 import com.yupi.springbootinit.service.InterfaceInfoService;
 import com.yupi.springbootinit.mapper.InterfaceInfoMapper;
 import org.apache.commons.lang3.StringUtils;

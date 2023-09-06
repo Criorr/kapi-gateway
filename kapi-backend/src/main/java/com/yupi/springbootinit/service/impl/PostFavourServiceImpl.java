@@ -10,7 +10,7 @@ import com.yupi.springbootinit.exception.BusinessException;
 import com.yupi.springbootinit.mapper.PostFavourMapper;
 import com.yupi.springbootinit.model.entity.Post;
 import com.yupi.springbootinit.model.entity.PostFavour;
-import com.yupi.springbootinit.model.entity.User;
+import com.yupi.kapicommon.model.entity.User;
 import com.yupi.springbootinit.service.PostFavourService;
 import com.yupi.springbootinit.service.PostService;
 import javax.annotation.Resource;

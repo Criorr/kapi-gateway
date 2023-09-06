@@ -11,10 +11,11 @@ import com.yupi.springbootinit.constant.UserConstant;
 import com.yupi.springbootinit.exception.BusinessException;
 import com.yupi.springbootinit.exception.ThrowUtils;
 import com.yupi.springbootinit.model.dto.interfaceinfo.InterfaceInfoAddRequest;
+import com.yupi.springbootinit.model.dto.interfaceinfo.InterfaceInfoInvokeRequest;
 import com.yupi.springbootinit.model.dto.interfaceinfo.InterfaceInfoQueryRequest;
 import com.yupi.springbootinit.model.dto.interfaceinfo.InterfaceInfoUpdateRequest;
-import com.yupi.springbootinit.model.entity.InterfaceInfo;
-import com.yupi.springbootinit.model.entity.User;
+import com.yupi.kapicommon.model.entity.InterfaceInfo;
+import com.yupi.kapicommon.model.entity.User;
 import com.yupi.springbootinit.model.enums.InterfaceInfoStatusEnum;
 import com.yupi.springbootinit.service.InterfaceInfoService;
 import com.yupi.springbootinit.service.UserService;
@@ -193,6 +194,41 @@ public class InterfaceInfoController {
         interfaceinfo.setId(id);
         boolean result = interfaceInfoService.updateById(interfaceinfo);
         return ResultUtils.success(result);
+    }
+
+
+    /**
+     * 测试调用
+     *
+     * @param interfaceInfoInvokeRequest
+     * @return
+     */
+    @PostMapping("/invoke")
+    public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest,
+                                                      HttpServletRequest request) {
+        if (interfaceInfoInvokeRequest == null || interfaceInfoInvokeRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        long id = interfaceInfoInvokeRequest.getId();
+        String userRequestParams = interfaceInfoInvokeRequest.getUserRequestParams();
+        // 判断是否存在
+        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+        if (oldInterfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+
+        if (oldInterfaceInfo.getStatus() == InterfaceInfoStatusEnum.OFFLINE.getValue()) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "接口已关闭");
+        }
+        User LoginUser = userService.getLoginUser(request);
+        String accessKey = LoginUser.getAccessKey();
+        String secretKey = LoginUser.getSecretKey();
+        KapiClient tempKapiClient = new KapiClient(accessKey,secretKey);
+        // TODO 根据不同情况 调用不同的接口进行测试
+        Gson gson = new Gson();
+        com.zk.kapiclientsdk.model.User user = gson.fromJson(userRequestParams, com.zk.kapiclientsdk.model.User.class);
+        String usernameByPost = tempKapiClient.getUsernameByPost(user);
+        return ResultUtils.success(usernameByPost);
     }
 
     /**

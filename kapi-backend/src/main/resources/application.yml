@@ -1,6 +1,4 @@
 # 公共配置文件
-# @author <a href="https://github.com/liyupi">程序员鱼皮</a>
-# @from <a href="https://yupi.icu">编程导航知识星球</a>
 spring:
   application:
     name: kapi-backend
@@ -21,9 +19,7 @@ spring:
   # todo 需替换配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/kapi
-    username: root
-    password: 123456
+
   # Redis 配置
   # todo 需替换配置，然后取消注释
 #  redis:
@@ -91,8 +87,17 @@ cos:
     region: xxx
     bucket: xxx
 
-# 测试接口是否可调用
-kapi:
-  client:
-    secret-key: zkapi
-    access-key: abcdefg
+# 测试接口是否可调用  在注入的时候才会读取到此处的aksk，new不会
+#kapi:
+#  client:
+#    secret-key: zkapi
+#    access-key: abcdefg
+
+dubbo:
+  application:
+    name: dubbo-springboot-demo-consumer
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: nacos://localhost:8848

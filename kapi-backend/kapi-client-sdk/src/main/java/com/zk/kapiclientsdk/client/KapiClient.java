@@ -24,6 +24,8 @@ public class KapiClient {
 
     private String secretKey;
 
+    private static final String GATEWAY_HOST = "http://127.0.0.1:8082";
+
     public KapiClient(String accessKey, String secretKey) {
         this.accessKey = accessKey;
         this.secretKey = secretKey;
@@ -34,7 +36,7 @@ public class KapiClient {
         //可以单独传入http参数，这样参数会自动做URL编码，拼接在URL中
         HashMap<String, Object> paramMap = new HashMap<>();
         paramMap.put("name", name);
-        String result3= HttpUtil.get("http://localhost:8123/api/name/", paramMap);
+        String result3= HttpUtil.get(GATEWAY_HOST + "/api/name/", paramMap);
         System.out.println(result3);
         return result3;
     }
@@ -44,7 +46,7 @@ public class KapiClient {
         //可以单独传入http参数，这样参数会自动做URL编码，拼接在URL中
         HashMap<String, Object> paramMap = new HashMap<>();
         paramMap.put("name", name);
-        String result3= HttpUtil.post("http://localhost:8123/api/name/", paramMap);
+        String result3= HttpUtil.post( GATEWAY_HOST + "/api/name/", paramMap);
         System.out.println(result3);
         return result3;
     }
@@ -77,7 +79,7 @@ public class KapiClient {
 
     public String getUsernameByPost(User user) {
         String json = JSONUtil.toJsonStr(user);
-        HttpResponse result2 = HttpRequest.post("http://localhost:8123/api/name/user/")
+        HttpResponse result2 = HttpRequest.post(GATEWAY_HOST + "/api/name/user")
                 .addHeaders(getHeaderMap(json))
                 .body(json)
                 .execute();

@@ -7,7 +7,7 @@ import com.yupi.springbootinit.exception.BusinessException;
 import com.yupi.springbootinit.mapper.PostThumbMapper;
 import com.yupi.springbootinit.model.entity.Post;
 import com.yupi.springbootinit.model.entity.PostThumb;
-import com.yupi.springbootinit.model.entity.User;
+import com.yupi.kapicommon.model.entity.User;
 import com.yupi.springbootinit.service.PostService;
 import com.yupi.springbootinit.service.PostThumbService;
 import javax.annotation.Resource;

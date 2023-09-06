@@ -1,7 +1,7 @@
 package com.yupi.springbootinit.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.yupi.springbootinit.model.entity.User;
+import com.yupi.kapicommon.model.entity.User;
 
 /**
  * 用户数据库操作
