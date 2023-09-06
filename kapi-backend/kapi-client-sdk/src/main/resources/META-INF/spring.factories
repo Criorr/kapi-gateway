@@ -1,2 +1,0 @@
-#springboot stater
-org.springframework.boot.autoconfigure.EnableAutoConfiguration =com.zk.kapiclientsdk.KapiClientConfig
